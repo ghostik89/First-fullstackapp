@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch, connect } from "react-redux";
 import { GET_LEADS } from "../../actions/types";
-import { getLeads } from "../../actions/leads";
+import { getLeads, deleteLead } from "../../actions/leads";
 
-const Leads = ({ getLeads }) => {
+const Leads = ({ getLeads, deleteLead }) => {
   const leads = useSelector((state) => state.leads);
 
   useEffect(() => {
@@ -31,7 +31,15 @@ const Leads = ({ getLeads }) => {
               <td>{lead.email}</td>
               <td>{lead.message}</td>
               <td>
-                <button className="btn btn-danger btn-sm">Delete</button>
+                <button
+                  onClick={() => {
+                    console.log(lead.id);
+                    deleteLead(lead.id);
+                  }}
+                  className="btn btn-danger btn-sm"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
@@ -41,4 +49,4 @@ const Leads = ({ getLeads }) => {
   );
 };
 
-export default connect(null, { getLeads })(Leads);
+export default connect(null, { getLeads, deleteLead })(Leads);
