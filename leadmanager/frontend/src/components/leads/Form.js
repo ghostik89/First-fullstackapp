@@ -1,23 +1,33 @@
 import React, { useState } from "react";
+import { addLead } from "../../actions/leads";
+import { connect } from "react-redux";
 
-export const Form = () => {
+const Form = ({ addLead }) => {
   const [lead, setLead] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  const onChange = (е) => setLead({ [e.target.name]: e.target.value });
+  const onChange = (e) => setLead({ ...lead, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("sub");
+    const { name, email, message } = lead;
+    const newLead = { name, email, message };
+    console.log(newLead);
+    addLead(newLead);
+    setLead({
+      name: "",
+      email: "",
+      message: "",
+    });
   };
 
   return (
     <div className="card card-body mt-4 mb-4">
       <h2>Add Lead Form</h2>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>Name</label>
           <input
@@ -39,7 +49,7 @@ export const Form = () => {
           />
         </div>
         <div className="form-group">
-          <label>Email</label>
+          <label>Message</label>
           <input
             className="form-control"
             type="message"
@@ -49,7 +59,7 @@ export const Form = () => {
           />
         </div>
         <div className="form-group">
-          <button type="submit" onSubmit={onSubmit} className="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Submit
           </button>
         </div>
@@ -57,3 +67,5 @@ export const Form = () => {
     </div>
   );
 };
+
+export default connect(null, { addLead })(Form);
