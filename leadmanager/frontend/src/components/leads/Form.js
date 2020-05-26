@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Form = () => {
   const [lead, setLead] = useState({
@@ -6,6 +6,13 @@ export const Form = () => {
     email: "",
     message: "",
   });
+
+  const onChange = (е) => setLead({ [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log("sub");
+  };
 
   return (
     <div className="card card-body mt-4 mb-4">
@@ -40,6 +47,11 @@ export const Form = () => {
             onChange={onChange}
             value={lead.message}
           />
+        </div>
+        <div className="form-group">
+          <button type="submit" onSubmit={onSubmit} className="btn btn-primary">
+            Submit
+          </button>
         </div>
       </form>
     </div>
